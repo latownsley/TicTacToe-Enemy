@@ -3,6 +3,8 @@
 #include <array>
 #include <utility>
 #include <algorithm>
+#include <random>
+#include <ctime>  
 
 // *******************
 //      Prototypes
@@ -29,6 +31,8 @@ int findScore(std::array<std::string, 9>& gameboard);
 int minimax(std::array<std::string, 9>& gameboard, int depth, bool isMaxPlayer);
 
 int findBestMove(std::array<std::string, 9>& gameboard);
+
+int findRandomIndex(std::array<std::string, 9>& gameboard);
 
 // *****************
 //        Main 
@@ -83,7 +87,13 @@ int main() {
 
         // Enemy's Move
         std::cout << "\n" << playerTwo << "'s turn: " << "\n";
-        int index = findBestMove(gameboard);
+        int index;
+        if (difficulty == 3 || difficulty == 2) {
+            index = findBestMove(gameboard);
+        } else{
+            index = findRandomIndex(gameboard);
+        }
+        
         playEnemyMove(gameboard, index, "O");
 
         gameOver = checkEndGameConditions(gameboard, playerOne, playerTwo);
@@ -146,6 +156,20 @@ std::pair<std::string, bool> evaluteGameboard(std::array<std::string, 9>& gamebo
     }
 
     return std::make_pair(winningMarker, won);
+}
+
+int findRandomIndex(std::array<std::string, 9>& gameboard) {
+    bool validated = false;
+    int randomIndex = -1;
+    std::srand(time(NULL));
+
+    while (validated == false) {
+        randomIndex = (rand() % 9);
+        if (isEmpty(gameboard, randomIndex)){
+            validated = true;
+        }
+    }
+    return randomIndex;
 }
 
 int findScore(std::array<std::string, 9>& gameboard) {

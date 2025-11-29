@@ -107,6 +107,13 @@ int main() {
 //     Functions 
 // ******************
 
+
+/**
+ * @brief Evaluate gameboard for winning move
+ * 
+ * @param gameboard The array that holds the gameboard.
+ * @return Pair of string of winning marker ("X" or "O") and a bool if the game was a draw or not
+ */
 std::pair<std::string, bool> evaluteGameboard(std::array<std::string, 9>& gameboard) {
     std::string winningMarker;
     bool won = false;
@@ -158,6 +165,12 @@ std::pair<std::string, bool> evaluteGameboard(std::array<std::string, 9>& gamebo
     return std::make_pair(winningMarker, won);
 }
 
+/**
+ * @brief Find random index for easy AI moves
+ * 
+ * @param gameboard The array that holds the gameboard.
+ * @return Int of index of a random move
+ */
 int findRandomIndex(std::array<std::string, 9>& gameboard) {
     bool validated = false;
     int randomIndex = -1;
@@ -172,6 +185,12 @@ int findRandomIndex(std::array<std::string, 9>& gameboard) {
     return randomIndex;
 }
 
+/**
+ * @brief Calculate score of gameboard per Minimax algorithm
+ * 
+ * @param gameboard The array that holds the gameboard.
+ * @return Int of score
+ */
 int findScore(std::array<std::string, 9>& gameboard) {
     std::pair<std::string, bool> results = evaluteGameboard(gameboard);
 
@@ -190,6 +209,14 @@ int findScore(std::array<std::string, 9>& gameboard) {
     return 0;
 }
 
+/**
+ * @brief recurse Minimax algorithm for determining best move. Calculates possible moves to the end of the game.
+ * 
+ * @param gameboard The array that holds the gameboard.
+ * @param depth holds the level of recursion
+ * @param isMaxPlayer hold a bool that determines if maximizing player (player) or not (Enemy AI)
+ * @return Int of the best numerical value for the move
+ */
 int minimax(std::array<std::string, 9>& gameboard, int depth, bool isMaxPlayer) {
     int score = findScore(gameboard);
 
@@ -253,7 +280,12 @@ int minimax(std::array<std::string, 9>& gameboard, int depth, bool isMaxPlayer) 
     }
 }
 
-// find best move for AI Enemy
+/**
+ * @brief Find best move for AI Enemy
+ * 
+ * @param gameboard The array that holds the gameboard.
+ * @return Int of index of the best move
+ */
 int findBestMove(std::array<std::string, 9>& gameboard) {
     int bestVal = -1000;
     int bestIndex = -1;     // holds index of best move
